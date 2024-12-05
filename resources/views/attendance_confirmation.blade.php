@@ -87,12 +87,40 @@ document.addEventListener('DOMContentLoaded', function() {
 <section>
 
 <h2>勤怠状況</h2>
+<form method="post" action="{{route('excel_export')}}" enctype="multipart/form-data" id="form">
 
 <div id='calendar'></div>
 
+<section>
+	<select name="date" required>
+	<option value="">選択してください</option>
+	<?php
+		$arr = array();
+
+		foreach($articles as $article){
+            $date = new DateTime($article->punch_in);
+            $formattedDate = $date->format('Y年m月'); // Change the format as needed
+            array_push($arr, $formattedDate);
+		}
+
+		array_unique($arr);
+
+		foreach($arr as $date){
+			echo "<option value='".$date."'>".$date."</option>";
+		}
+	?>
+	</select>
+
+	<p class="btn">
+		<input type="submit" value="ダウンロード">
+	</p>
+</section>
+
 <p class="btn">
-<input type="submit" value="内容を確認する">
+<input type="button" value="管理者画面" onclick="location.href='{{route('admin_menu')}}'">
 </p>
+
+</form>
 
 </section>
 

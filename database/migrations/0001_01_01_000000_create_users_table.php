@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('stamp_state')->default('未稼働');
+            $table->string('stamp_state')->default('未稼働');
             $table->text('stamp_id')->nullable();
             $table->string('stafftype');
             $table->string('email')->unique();

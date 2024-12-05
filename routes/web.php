@@ -3,13 +3,14 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+//Route::get('/', [App\Http\Controllers\staffController::class, 'entry_send'])->name('staff_entrysend');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     //打刻関連
@@ -53,6 +54,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/userconfig_modify', [App\Http\Controllers\userController::class, 'user_config_modify'])->name('user_config_modify');
     Route::get('/modify_adminpassword', [App\Http\Controllers\adminController::class, 'modify_adminpassword_show'])->name('modify_adminpassword');
     Route::post('/modify_adminpassword', [App\Http\Controllers\adminController::class, 'modify_adminpassword'])->name('modify_adminpassword_now');
+
+    //excel出力
+    Route::post('/export', [App\Http\Controllers\excelController::class, 'excel_export'])->name('excel_export');
 
     Route::get('/admin_menu', function () {
         return view('admin_menu');
