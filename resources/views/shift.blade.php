@@ -169,7 +169,8 @@ ul{
 <li><a href="">{{Auth::user()->name}}</a>
 	<ul>
 		<li><a href="">パスワード変更</a></li>
-		<li><a href="{{route('logout')}}">ログアウト</a></li>
+		<li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf
+        </form></li>
 	</ul>
 </li>
 </ul>
@@ -184,6 +185,8 @@ ul{
 <form id="form" enctype="multipart/form-data" method="post" action="{{route('shift_add')}}">
 @csrf
 <input type="hidden" name="field_cnt" id="field_cnt" value="1">
+<input typq="hidden" id="del_url" value="{{route('shift_delete')}}">
+<input typq="hidden" id="mod_url" value="{{route('shift_modify')}}">
 
 <div id='calendar'></div>
 <h3>シフト追加</h3>
@@ -223,6 +226,7 @@ ul{
 
 <p class="btn">
 <input type="button" id="add" value="入力欄を追加する">
+&nbsp;
 <input type="button" id="del" value="入力欄を削除する">
 </p>
 

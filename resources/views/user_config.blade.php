@@ -25,7 +25,8 @@
 <li><a href="">{{Auth::user()->name}}</a>
 	<ul>
 		<li><a href="">パスワード変更</a></li>
-		<li><a href="{{route('logout')}}">ログアウト</a></li>
+		<li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf
+        </form></li>
 	</ul>
 </li>
 </ul>

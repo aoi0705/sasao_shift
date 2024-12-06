@@ -2,9 +2,9 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>求人サイト向け 無料ホームページテンプレート tp_job4</title>
+<title>勤怠管理システム</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="ここにサイト説明を入れます">
+<meta name="description" content="勤怠管理システム">
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
 </head>
 
@@ -71,43 +71,6 @@
 
 </main>
 
-<div id="footermenu">
-<ul>
-<li class="title">メニュー</li>
-<li><a href="index.html">ホーム</a></li>
-<li><a href="company.html">会社概要</a></li>
-<li><a href="info.html">掲載のご案内</a></li>
-<li><a href="faq.html">よく頂く質問</a></li>
-<li><a href="contact.html">お問い合わせ</a></li>
-</ul>
-<ul>
-<li class="title">求人一覧</li>
-<li><a href="list.html">飲食店の求人</a></li>
-<li><a href="list.html">営業の求人</a></li>
-<li><a href="list.html">接客・販売の求人</a></li>
-<li><a href="list.html">事務の求人</a></li>
-</ul>
-<ul>
-<li class="title">メニュー見出し</li>
-<li><a href="#">サンプルメニューサンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-</ul>
-<ul>
-<li class="title">メニュー見出し</li>
-<li><a href="#">サンプルメニューサンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-</ul>
-</div>
-<!--/#footermenu-->
-
-<footer>
-<small>Copyright&copy; <a href="index.html">JOB INFO</a> All Rights Reserved.</small>
-<span class="pr"><a href="https://template-party.com/" target="_blank">《Web Design:Template-Party》</a></span>
-</footer>
 
 </div>
 <!--/#container-->

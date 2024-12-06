@@ -30,12 +30,14 @@ ul{
 <li><a href="">{{Auth::user()->name}}</a>
 	<ul>
 		<li><a href="">パスワード変更</a></li>
-		<li><a href="{{route('logout')}}">ログアウト</a></li>
+		<li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf
+        </form></li>
 	</ul>
 </li>
 </ul>
 </nav>
 </header>
+
 
 <main>
 
@@ -80,7 +82,7 @@ ul{
 </table>
 
 <p class="btn">
-<input type="submit" value="内容を確認する">
+<input type="submit" value="勤務変更する">
 &nbsp;
 <input type="button" value="勤怠確認に戻る" onclick="location.href='{{route('attendance_show')}}'">
 </p>

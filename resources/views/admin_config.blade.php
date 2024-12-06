@@ -22,6 +22,13 @@
 <li><a href="{{route('admin_config_show')}}">各種設定</a></li>
 <li><a href="{{route('received_file')}}">スタッフ送信ファイル確認</a></li>
 <li><a href="{{route('paid_holiday_list')}}">有給申請確認</a></li>
+<li><a href="">管理者アカウント</a>
+	<ul>
+		<li><a href="">パスワード変更</a></li>
+		<li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf
+        </form></li>
+	</ul>
+</li>
 </ul>
 </nav>
 </header>
@@ -33,7 +40,7 @@
 <h2>管理者設定</h2>
 
 <!-- フォームの情報はここからです -->
-<form enctype="multipart/form-data" method="post" action="">
+<form enctype="multipart/form-data" method="post" action="{{route('user_config_modify')}}">
 @csrf
 <table class="ta1">
 <!--<tr><td colspan="2" class="auto"><strong>確認画面</strong></td></tr>-->

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class adminController extends Controller
 {
@@ -63,5 +64,51 @@ class adminController extends Controller
         $admin = DB::table('users')->where('role', 'admin')->update($param);
 
         return redirect()->route('admin_config_show');
+    }
+
+
+
+    public function show(){
+        session_start();
+
+        return view('admin_entry');
+    }
+    public function admin_entryconfirm(Request $request)
+    {
+        session_start();
+
+        $_SESSION['email'] = $_POST['email'];
+        $_SESSION['password'] = $_POST['password'];
+        $_SESSION['name'] = $_POST['name'];
+
+        return view('admin_entryconfirm');
+    }
+
+    public function admin_entrynow(Request $request)
+    {
+        session_start();
+
+        $param = [
+			'name' => $_SESSION['name'],
+            'stafftype' => 'admin',
+            'furigana' => '',
+            'sex' => '',
+            'postnumber' => '',
+            'address' => '',
+            'train_route' => '',
+            'station' => '',
+            'mynumber' => '',
+            'dependent' => '',
+            'password' => Hash::make($_SESSION['password']),
+            'email' => $_SESSION['email'],
+            'role' => 'admin',
+            'created_at' => now(),
+		];
+
+        DB::table('users')->insert($param);
+
+        session_destroy();
+
+        return view('staffentry_complete');
     }
 }

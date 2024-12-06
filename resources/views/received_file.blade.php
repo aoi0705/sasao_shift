@@ -22,6 +22,13 @@
 <li><a href="{{route('admin_config_show')}}">各種設定</a></li>
 <li><a href="{{route('received_file')}}">スタッフ送信ファイル確認</a></li>
 <li><a href="{{route('paid_holiday_list')}}">有給申請確認</a></li>
+<li><a href="">管理者アカウント</a>
+	<ul>
+		<li><a href="">パスワード変更</a></li>
+		<li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf
+        </form></li>
+	</ul>
+</li>
 </ul>
 </nav>
 </header>

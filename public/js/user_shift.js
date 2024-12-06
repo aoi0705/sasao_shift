@@ -2,6 +2,7 @@ $(document).on("click", "#add", function(){
 
     var field_cnt = $('#field_cnt').val();
     var cnt = Number(field_cnt)+1;
+    var user_id = document.getElementsByName('staffname1')[0].value
 
     if(cnt > 10){
         alert('最大10個までです');
@@ -10,15 +11,7 @@ $(document).on("click", "#add", function(){
 
     var newField = $('<section id="add_shift'+cnt+'">' +
         '<ul>' +
-        //'<li><select name="stafftype" id="stafftype">' +
-        //'<option value="">スタッフ種別を選択してください</option>' +
-        //'</select>' +
-        //'</li>' +
-        //'<li><select name="staffname' + cnt + '" id="staffname' + cnt + '">' +
-        //'<option value="">スタッフ名を選択してください</option>' +
-        //'</select>' +
-        //'</li>' +
-        '<input type="hidden" name="staffname' + cnt + '" value="<?php echo Auth::id(); ?>">' +
+        '<input type="hidden" name="staffname' + cnt + '" value="' + user_id + '">' +
         '<li><label>勤務日　：</label><input type="date" name="date' + cnt + '" id="date' + cnt + '"></li>' +
         '<li><label>勤務時間：</label><input type="time" name="start_time' + cnt + '" id="start_time' + cnt + '">～<input type="time" name="end_time' + cnt + '" id="end_time' + cnt + '"></li>' +
         '</ul>' +
@@ -43,14 +36,16 @@ $(document).on("click", "#del", function(){
 });
 
 $(document).on("click", "#modify", function(){
+    var mod_url = document.getElementById('mod_url');
     var formObject = document.getElementById('form');
-    formObject.action = "{{route('shift_modify')}}";
+    formObject.action = mod_url.value;
 
     formObject.submit();
 });
 $(document).on("click", "#delete", function(){
+    var del_url = document.getElementById('del_url');
     var formObject = document.getElementById('form');
-    formObject.action = "{{route('shift_delete')}}";
+    formObject.action = del_url.value;
 
     formObject.submit();
 });

@@ -37,15 +37,30 @@
 
 <section>
 
-<h2>管理者メニュー</h2>
+<h2>管理者登録情報確認</h2>
 
-<ul class="menu">
-<li><a href="{{route('attendance_confirmation')}}">勤怠管理</a></li>
-<li><a href="{{route('staff_listshow')}}">スタッフ一覧</a></li>
-<li><a href="{{route('admin_config_show')}}">各種設定</a></li>
-<li><a href="{{route('received_file')}}">スタッフ送信ファイル確認</a></li>
-<li><a href="{{route('paid_holiday_list')}}">有給申請確認</a></li>
-</ul>
+<!-- フォームの情報はここからです -->
+<form enctype="multipart/form-data" method="post" action="{{route('admin_entrynow')}}">
+@csrf
+<table class="ta1">
+<tr>
+<th>メールアドレス※</th>
+<td>{{$_SESSION['email']}}</td>
+</tr>
+<tr>
+<th>お名前※</th>
+<td>{{$_SESSION['name']}}</td>
+</tr>
+</table>
+
+<p class="btn">
+<input type="submit" value="送信する">
+&nbsp;
+<input type="button" value="戻る" onClick="document.form1.mode.value='reinput';document.form1.submit()">
+</p>
+
+</form>
+<!-- フォームの情報はここまでです -->
 
 </section>
 

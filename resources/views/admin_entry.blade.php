@@ -13,26 +13,22 @@
 <div id="container">
 
 <header>
-<h1 id="logo"><a href="index.html"><img src="images/logo.png" alt="JOB INFO"></a></h1>
+<h1 id="logo"><a href="{{route('admin_menu')}}"><img src="images/logo.png" alt="JOB INFO"></a></h1>
 <!--メインメニュー-->
 <nav id="menubar">
 <ul>
-<li><a href="">求人一覧<span>Recruit</span></a>
+<li><a href="{{route('attendance_confirmation')}}">勤怠管理</a></li>
+<li><a href="{{route('staff_listshow')}}">スタッフ一覧</a></li>
+<li><a href="{{route('admin_config_show')}}">各種設定</a></li>
+<li><a href="{{route('received_file')}}">スタッフ送信ファイル確認</a></li>
+<li><a href="{{route('paid_holiday_list')}}">有給申請確認</a></li>
+<li><a href="">管理者アカウント</a>
 	<ul>
-	<li><a href="list.html">飲食店の求人</a></li>
-	<li><a href="list.html">営業の求人</a></li>
-	<li><a href="list.html">接客・販売の求人</a></li>
-	<li><a href="list.html">事務の求人</a></li>
+		<li><a href="">パスワード変更</a></li>
+		<li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf
+        </form></li>
 	</ul>
 </li>
-<li><a href="info.html">掲載のご案内<span>Information</span></a></li>
-<li><a href="">よく頂く質問<span>Faq</span></a>
-	<ul>
-	<li><a href="faq.html">求人に関するご質問</a></li>
-	<li><a href="faq.html">掲載に関するご質問</a></li>
-	</ul>
-</li>
-<li><a href="contact.html">お問い合わせ<span>Contact</span></a></li>
 </ul>
 </nav>
 </header>
@@ -41,22 +37,15 @@
 
 <section>
 
-<h2>お問い合わせ</h2>
+<h2>管理者情報登録</h2>
 
-<form id="form" action="{{route('staff_entry_confirm')}}" method="post" enctype="multipart/form-data">
+<form id="form" action="{{route('admin_entryconfirm')}}" method="post" enctype="multipart/form-data">
 @csrf
 <input type="hidden" id="field_cnt" name="field_cnt" value="1">
-<input type="hidden" name="id" value="{{$_SESSION['id']}}">
 <table class="ta1" id="entry_form">
 <tr>
-<th>スタッフ種別※</th>
-<td>{{$article->stafftype}}
-<input type="hidden" name="stafftype" value="{{$article->stafftype}}">
-<td>
-</tr>
-<tr>
 <th>メールアドレス※</th>
-<td><input type="email" name="email" size="30" class="ws" value="{{$_SESSION['email']}}" required></td>
+<td><input type="email" name="email" size="30" class="ws" value="" required></td>
 </tr>
 <tr>
 <th>パスワード※</th>
@@ -70,58 +59,7 @@
 <th>お名前※</th>
 <td><input type="text" name="name" size="30" class="ws" required></td>
 </tr>
-<tr>
-<th>ふりがな</th>
-<td><input type="text" name="furigana" size="30" class="ws" required></td>
-</tr>
-<tr>
-<th>性別</th>
-<td>
-    <select name="sex" id="sex" required>
-        <option value="">性別を選択してください</option>
-        <option value="男性">男性</option>
-        <option value="女性">女性</option>
-    </select>
-</td>
-</tr>
-<tr>
-<th>郵便番号</th>
-<td><input type="text" name="postnumber" size="30" class="ws" required></td>
-</tr>
-<tr>
-<th>住所</th>
-<td><input type="text" name="address" size="30" class="ws" required></td>
-</tr>
-<tr>
-<th>最寄り路線</th>
-<td><input type="text" name="train_route" size="30" class="ws" required></td>
-</tr>
-<tr>
-<th>最寄り駅</th>
-<td><input type="text" name="station" size="30" class="ws" required></td>
-</tr>
-<tr>
-<th>マイナンバー</th>
-<td><input type="text" name="mynumber" size="30" class="ws" required></td>
-</tr>
-<tr>
-<th>扶養の有無</th>
-<td>
-    <select name="dependent" id="dependent">
-        <option value="無">無</option>
-        <option value="有">有</option>
-    </select>
-</td>
-</tr>
 </table>
-
-<div id="dependent_area">
-</div>
-
-<p class="btn">
-    <input type="button" value="追加" id="add">
-    <input type="button" value="削除" id="remove">
-</p>
 
 <p class="btn">
 <input type="submit" value="内容を確認する">
@@ -132,7 +70,6 @@
 </section>
 
 </main>
-
 
 </div>
 <!--/#container-->
