@@ -1,4 +1,3 @@
-
 <?php
 	if(Auth::user()->role == 'user'){
 		header('Location: ' . route('user_menu_show'));
@@ -13,6 +12,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="勤怠管理システム">
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
+<style>
+    ul{list-style-type: none;}
+</style>
 </head>
 
 <body>
@@ -44,53 +46,53 @@
 
 <section>
 
-<h2>有給申請一覧</h2>
+<h2>スタッフ種別設定</h2>
 
 <!-- フォームの情報はここからです -->
-<form name="form1" enctype="multipart/form-data" method="post" action="">
-<h3>未承認</h3>
-<table class="ta1">
-<!--<tr><td colspan="2" class="auto"><strong>確認画面</strong></td></tr>-->
-<!-- 入力／確認 -->
-<!--<tr><th class="tamidashi" colspan="2">お問い合わせフォーム</th></tr>-->
-<?php
-foreach($articles as $article){
-    if($article->state == "未承認"){
-        echo "<tr>";
-        echo "<th>ユーザー名：".$article->user_name."</th>";
-        echo "<td>取得日　　：".$article->date."</td>";
-        echo "<td>送信日時　：".$article->created_at."</td>";
-        echo "<td><a href='".asset('holiday_approval')."/".$article->id."'>承認する</a></td>";
-        echo "</tr>";
-    }
-}
-?>
-</table>
+<form enctype="multipart/form-data" method="post" action="{{route('setting_stafftype')}}">
+@csrf
 
-<h3>承認済み</h3>
-<table class="ta1">
-<!--<tr><td colspan="2" class="auto"><strong>確認画面</strong></td></tr>-->
-<!-- 入力／確認 -->
-<!--<tr><th class="tamidashi" colspan="2">お問い合わせフォーム</th></tr>-->
-<?php
-foreach($articles as $article){
-    if($article->state == "承認済"){
-        echo "<tr>";
-        echo "<th>ユーザー名：".$article->user_name."</th>";
-        echo "<td>取得日　　：".$article->date."</td>";
-        echo "<td>送信日時　：".$article->created_at."</td>";
-        echo "<td><a href='".asset('holiday_denial')."/".$article->id."'>差し戻す</a></td>";
-        echo "</tr>";
-    }
-}
-?>
-</table>
+<ul id="add_area">
+    <?php
+        $arr = json_decode($article->stafftype_list,true);
 
+        if(!empty($arr)){
+            $cnt = 1;
+            $count = count($arr);
 
+            echo '<input type="hidden" id="field_cnt" value="'.$count.'">';
+
+            foreach($arr as $key => $val){
+                echo '<li>'.$cnt.'<ul>';
+                echo '<li><label>種別名：<input type="text" name="type_name'.$cnt.'" value="'.$key.'" required></label></li>';
+                echo '<li><label>時給　：<input type="number" name="wage'.$cnt.'" value="'.$val.'" required></label></li>';
+                echo '</ul></li>';
+
+                $cnt++;
+            }
+        }
+        else{
+            echo '<input type="hidden" id="field_cnt" value="1">';
+
+            echo '<li>1<ul>';
+            echo '<li><label>種別名：<input type="text" name="type_name1" required></label></li>';
+            echo '<li><label>時給　：<input type="number" name="wage1" required></label></li>';
+            echo '</ul></li>';
+        }
+    ?>
+</ul>
+
+<p class="btn">
+    <input type="button" id="add" value="追加">
+    &nbsp;
+    <input type="button" id="del" value="削除">
+</p>
+
+<br>
 <p class="btn">
 <input type="submit" value="送信する">
 &nbsp;
-<input type="button" value="管理者画面" onclick="location.href='{{route('admin_menu')}}'">
+<input type="button" value="管理者設定画面" onclick="location.href='{{route('admin_config_show')}}'">
 </p>
 
 </form>
@@ -108,6 +110,7 @@ foreach($articles as $article){
 
 <!--job4用のスクリプト-->
 <script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/setting_stafftype.js')}}"></script>
 
 <!--ハンバーガーボタン（開閉操作のボタン）-->
 <div id="menubar_hdr"></div>

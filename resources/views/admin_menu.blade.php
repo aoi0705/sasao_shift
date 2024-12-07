@@ -1,3 +1,9 @@
+<?php
+	if(Auth::user()->role == 'user'){
+		header('Location: ' . route('user_menu_show'));
+        exit();
+	}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>

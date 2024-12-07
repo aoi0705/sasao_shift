@@ -195,18 +195,21 @@ class userController extends Controller
         $file_arr = json_decode($article->file_path,true);
 
         $zip = new \ZipArchive();
-        $zip_name = storage_path('app/public') . "/{$article->title}.zip"; //zipファイル名
+        $zip_name = storage_path('app/public') . "/download.zip"; //zipファイル名
         $zip->open($zip_name, \ZipArchive::CREATE);
 
         foreach($file_arr as $key => $value){
-            $zip->addFile(storage_path('app/public') . $value, basename($value));
+            $replace_name = str_replace('storage', 'storage/app/public', $value);
+            $file_name = str_replace('/storage/app/public/', '', $replace_name);
+
+            $zip->addFile($replace_name, $file_name);
         }
 
         $zip->close();
 
         header('Content-Type: application/zip');
         header('Content-Length: '.filesize($zip_name));
-        header('Content-Disposition: attachment; filename="'.$article->title.'.zip"');
+        header('Content-Disposition: attachment; filename="download.zip"');
         readfile($zip_name);
 
         unlink($zip_name);

@@ -15,7 +15,9 @@ class staffController extends Controller
     public function entry_send(){
         session_start();
 
-        return view('staff_entrysend');
+        $articles = DB::table('option')->find(1);
+
+        return view('staff_entrysend',compact('articles'));
     }
 
     public function entry_show($id){

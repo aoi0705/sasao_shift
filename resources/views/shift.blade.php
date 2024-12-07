@@ -1,3 +1,9 @@
+<?php
+	if(Auth::user()->role == 'admin'){
+		header('Location: ' . route('admin_menu'));
+        exit();
+	}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -185,8 +191,8 @@ ul{
 <form id="form" enctype="multipart/form-data" method="post" action="{{route('shift_add')}}">
 @csrf
 <input type="hidden" name="field_cnt" id="field_cnt" value="1">
-<input typq="hidden" id="del_url" value="{{route('shift_delete')}}">
-<input typq="hidden" id="mod_url" value="{{route('shift_modify')}}">
+<input type="hidden" id="del_url" value="{{route('shift_delete')}}">
+<input type="hidden" id="mod_url" value="{{route('shift_modify')}}">
 
 <div id='calendar'></div>
 <h3>シフト追加</h3>

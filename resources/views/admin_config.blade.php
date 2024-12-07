@@ -1,3 +1,9 @@
+<?php
+	if(Auth::user()->role == 'user'){
+		header('Location: ' . route('user_menu_show'));
+        exit();
+	}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -57,6 +63,14 @@
 <td>
 <p class="btn">
     <input type="button" id="password" value="パスワード変更はこちら" onclick="location.href='{{route('modify_adminpassword')}}'">
+</p>
+</td>
+</tr>
+<tr>
+<th width="150">スタッフ種別設定</th>
+<td>
+<p class="btn">
+    <input type="button" id="setting_stafftype" value="スタッフ種別設定はこちら" onclick="location.href='{{route('setting_stafftype_show')}}'">
 </p>
 </td>
 </tr>

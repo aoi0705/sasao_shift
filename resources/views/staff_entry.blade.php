@@ -41,7 +41,7 @@
 
 <section>
 
-<h2>お問い合わせ</h2>
+<h2>スタッフ登録フォーム</h2>
 
 <form id="form" action="{{route('staff_entry_confirm')}}" method="post" enctype="multipart/form-data">
 @csrf

@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/staff_edit', [App\Http\Controllers\staffController::class, 'staff_edit'])->name('staff_edit');
     //その管理者メニューの設定
     Route::get('/admin_config', [App\Http\Controllers\adminController::class, 'admin_config_show'])->name('admin_config_show');
+    Route::get('/setting_stafftype', [App\Http\Controllers\adminController::class, 'setting_stafftype_show'])->name('setting_stafftype_show');
+    Route::post('/setting_stafftype', [App\Http\Controllers\adminController::class, 'setting_stafftype'])->name('setting_stafftype');
 
     //ユーザ設定関連
     Route::get('/user_menu', [App\Http\Controllers\userController::class, 'user_menu_show'])->name('user_menu_show');

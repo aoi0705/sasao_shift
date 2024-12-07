@@ -1,3 +1,9 @@
+<?php
+	if(Auth::user()->role == 'admin'){
+		header('Location: ' . route('admin_menu'));
+        exit();
+	}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>

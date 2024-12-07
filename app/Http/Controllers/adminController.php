@@ -111,4 +111,32 @@ class adminController extends Controller
 
         return view('staffentry_complete');
     }
+
+    public function setting_stafftype_show(){
+        session_start();
+
+        $article = DB::table('option')->find(1);
+
+        return view('setting_stafftype',compact('article'));
+    }
+    public function setting_stafftype(Request $request){
+        session_start();
+
+        $arr = array();
+        for($i=1;$i<=100;$i++){
+            if(!isset($_POST['type_name'.$i])){
+                break;
+            }
+
+            $arr[$_POST['type_name'.$i]] = $_POST['wage'.$i];
+        }
+
+        $param = [
+            'stafftype_list' => json_encode($arr)
+        ];
+        $option = DB::table('option')->where('id', 1)->update($param);
+
+
+        return redirect()->route('admin_config_show');
+    }
 }
