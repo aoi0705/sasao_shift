@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('option', function (Blueprint $table) {
             $table->id();
             //スタッフ種別
-            $table->json('stafftype_list')->default('{}');
+            $table->json('stafftype_list')->nullable();
             //時給 
-            $table->json('wage')->default('{}');
+            $table->json('wage')->nullable();
             // 保険料
-            $table->json('insurance_premium')->default('{}');
+            $table->json('insurance_premium')->nullable();
             // 年金
-            $table->json('pension')->default('{}');
+            $table->json('pension')->nullable();
             // マージン計算
-            $table->json('margin')->default('{}');
+            $table->json('margin')->nullable();
             $table->timestamps();
         });
     }

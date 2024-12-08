@@ -46,7 +46,7 @@
 <h2>スタッフ一覧</h2>
 
 @foreach ($articles as $user)
-
+@if($user->name !== '')
 <div class="user_area">
 <h3>{{__('スタッフID:')}}{{$user->id}}</h3>
     <ul>
@@ -56,6 +56,7 @@
         <li><a href="{{ route('staff_detail', ['id'=>$user->id]) }}">{{__('スタッフの詳細情報を確認')}}</a></li>
     </ul>
 </div>
+@endif
 @endforeach
 
 <p class="btn">

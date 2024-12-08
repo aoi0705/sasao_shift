@@ -54,9 +54,10 @@
 
 <ul id="add_area">
     <?php
-        $arr = json_decode($article->stafftype_list,true);
+        
 
-        if(!empty($arr)){
+        if(!is_null($article)){
+            $arr = json_decode($article->stafftype_list,true);
             $cnt = 1;
             $count = count($arr);
 

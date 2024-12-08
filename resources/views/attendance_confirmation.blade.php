@@ -12,8 +12,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="ここにサイト説明を入れます">
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.css">
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@5.11.0/main.min.js'></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
@@ -28,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         echo "title: '".$article->user_name."',";
                         echo "start: '".$article->punch_in."',";
                         echo "end: '".$article->punch_out."',";
-                        echo "url: '#'";
                         echo "},";
 
                         $i = $i + 1;
@@ -51,12 +53,79 @@ document.addEventListener('DOMContentLoaded', function() {
                     left: 'title',
                     center: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
                     right: 'prev,today,next'
-                },
+	},
+	selectable: true,
+	editable: true,
+    eventClick: function(info) {
+      var eventDate = info.event.start;
+      var year = eventDate.getFullYear();
+      var month = eventDate.getMonth() + 1;
+      var day = eventDate.getDate();
+
+	  var startTime = info.event.start.toLocaleString('ja-JP', { hour: '2-digit', minute: '2-digit' , timeZone: 'Asia/Tokyo'});
+      var endTime = info.event.end ? info.event.end.toLocaleString('ja-JP', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tokyo' }) : 'N/A';
+
+      document.getElementById('modalBody-shift').innerHTML = `
+        <p><strong>勤務者:</strong>${info.event.title}</p>
+        <p><strong>勤務開始時刻:</strong>${startTime}</p>
+        <p><strong>勤務終了時刻:</strong>${endTime}</p>
+      `;
+
+      var modal = document.getElementById('eventModal-shift');
+      modal.style.display = "block";
+
+      var span = document.getElementsByClassName("close-shift")[0];
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+    }
   });
   calendar.render();
 });
 
 </script>
+<style>
+.modal-shift {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content-shift {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.close-shift {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-shift:hover,
+.close-shift:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
 </head>
 
 <body>
@@ -103,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		foreach($articles as $article){
             $date = new DateTime($article->punch_in);
-            $formattedDate = $date->format('Y年m月'); // Change the format as needed
+            $formattedDate = $date->format('Y年m月');
             array_push($arr, $formattedDate);
 		}
 
@@ -125,49 +194,21 @@ document.addEventListener('DOMContentLoaded', function() {
 <input type="button" value="管理者画面" onclick="location.href='{{route('admin_menu')}}'">
 </p>
 
+<!-- Custom Modal -->
+<div id="eventModal-shift" class="modal-shift">
+  <div class="modal-content-shift">
+    <span class="close-shift">&times;</span>
+    <div id="modalBody-shift">
+      <!-- Event details will be inserted here -->
+    </div>
+  </div>
+</div>
+
 </form>
 
 </section>
 
 </main>
-
-<div id="footermenu">
-<ul>
-<li class="title">メニュー</li>
-<li><a href="index.html">ホーム</a></li>
-<li><a href="company.html">会社概要</a></li>
-<li><a href="info.html">掲載のご案内</a></li>
-<li><a href="faq.html">よく頂く質問</a></li>
-<li><a href="contact.html">お問い合わせ</a></li>
-</ul>
-<ul>
-<li class="title">求人一覧</li>
-<li><a href="list.html">飲食店の求人</a></li>
-<li><a href="list.html">営業の求人</a></li>
-<li><a href="list.html">接客・販売の求人</a></li>
-<li><a href="list.html">事務の求人</a></li>
-</ul>
-<ul>
-<li class="title">メニュー見出し</li>
-<li><a href="#">サンプルメニューサンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-</ul>
-<ul>
-<li class="title">メニュー見出し</li>
-<li><a href="#">サンプルメニューサンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-</ul>
-</div>
-<!--/#footermenu-->
-
-<footer>
-<small>Copyright&copy; <a href="index.html">JOB INFO</a> All Rights Reserved.</small>
-<span class="pr"><a href="https://template-party.com/" target="_blank">《Web Design:Template-Party》</a></span>
-</footer>
 
 </div>
 <!--/#container-->

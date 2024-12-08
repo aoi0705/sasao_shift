@@ -134,8 +134,13 @@ class adminController extends Controller
         $param = [
             'stafftype_list' => json_encode($arr)
         ];
-        $option = DB::table('option')->where('id', 1)->update($param);
 
+        if(DB::table('option')->where('id', 1)->doesntExist()){
+            $option = DB::table('option')->insert($param);
+        }
+        else{
+            $option = DB::table('option')->where('id', 1)->update($param);
+        }
 
         return redirect()->route('admin_config_show');
     }

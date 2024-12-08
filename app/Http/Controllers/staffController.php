@@ -173,7 +173,7 @@ class staffController extends Controller
     public function staff_delete(Request $request){
         session_start();
 
-        if($_POST['admin_password'] == "admin"){
+        if($_POST['admin_password_delete'] == "admin"){
             DB::table('users')->where('id', $_POST['id'])->delete();
             $articles = DB::table('users')->get()->toArray();
             return view('staff_list', compact('articles'));
@@ -185,7 +185,7 @@ class staffController extends Controller
     public function staff_edit(Request $request){
         session_start();
 
-        if($_POST['admin_password'] == "admin"){
+        if($_POST['admin_password_modify'] == "admin"){
             $param = [
                 'name' => $_POST['name'],
                 'furigana' => $_POST['furigana'],

@@ -12,6 +12,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="勤怠管理システム">
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
+<style>
+.modal-shift {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content-shift {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.close-shift {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-shift:hover,
+.close-shift:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
 </head>
 
 <body>
@@ -159,26 +195,12 @@
 <input type="button" value="管理者画面" onclick="location.href='{{route('admin_menu')}}'">
 </p>
 
-<div id="modal_modify" class="modal-container">
-  <div class="modal-body">
-    <div class="modal-close">×</div>
-    <div class="modal-content">
-    <h3>変更</h3>
-      管理者パスワードを入力してください。
-      <input type="text" name="admin_password" class="ws"><br>
-      <button type="submit" id="modify_submit">変更</button>
-    </div>
-  </div>
-</div>
-
-<div id="modal_delete" class="modal-container">
-  <div class="modal-body">
-    <div class="modal-close">×</div>
-    <div class="modal-content">
-    <h3>削除</h3>
-      削除：管理者パスワードを入力してください。
-      <input type="text" name="admin_password" class="ws"><br>
-      <button type="button" id="delete_submit">変更</button>
+<!-- Custom Modal -->
+<div id="eventModal-shift" class="modal-shift">
+  <div class="modal-content-shift">
+    <span class="close-shift">&times;</span>
+    <div id="modalBody-shift">
+      <!-- Event details will be inserted here -->
     </div>
   </div>
 </div>
@@ -203,51 +225,69 @@
 $(function(){
   // 変数に要素を入れる
   var open = $('#modify'),
-    close = $('.modal-close'),
+    close = $('.close-shift')[0],
     container = $('#modal_modify');
 
   //開くボタンをクリックしたらモーダルを表示する
   open.on('click',function(){ 
-    container.addClass('active');
-    return false;
+    document.getElementById('modalBody-shift').innerHTML = `
+      <h3>変更</h3>
+      <p>管理者パスワードを入力してください。</p>
+      <input type="text" name="admin_password_modify" class="ws"><br>
+      <button type="submit" id="modify_submit">変更</button>
+    `;
+    var modal = document.getElementById('eventModal-shift');
+    modal.style.display = "block";
   });
 
-  //閉じるボタンをクリックしたらモーダルを閉じる
-  close.on('click',function(){  
-    container.removeClass('active');
-  });
+  // Close the modal when the user clicks on <span> (x)
+  var span = document.getElementsByClassName("close-shift")[0];
+  span.onclick = function() {
+    var modal = document.getElementById('eventModal-shift');
+    modal.style.display = "none";
+  }
 
-  //モーダルの外側をクリックしたらモーダルを閉じる
-  $(document).on('click',function(e) {
-    if(!$(e.target).closest('.modal-body').length) {
-      container.removeClass('active');
+  // Close the modal when the user clicks anywhere outside of the modal
+  window.onclick = function(event) {
+    var modal = document.getElementById('eventModal-shift');
+    if (event.target == modal) {
+      modal.style.display = "none";
     }
-  });
+  }
 });
 
 $(function(){
   // 変数に要素を入れる
   var open = $('#delete'),
-    close = $('.modal-close'),
+    close = $('.close-shift')[0],
     container = $('#modal_delete');
 
   //開くボタンをクリックしたらモーダルを表示する
   open.on('click',function(){ 
-    container.addClass('active');
-    return false;
+    document.getElementById('modalBody-shift').innerHTML = `
+      <h3>削除</h3>
+      <p>削除：管理者パスワードを入力してください。</p>
+      <input type="text" name="admin_password_delete" class="ws"><br>
+      <button type="button" id="delete_submit">変更</button>
+    `;
+    var modal = document.getElementById('eventModal-shift');
+    modal.style.display = "block";
   });
 
-  //閉じるボタンをクリックしたらモーダルを閉じる
-  close.on('click',function(){  
-    container.removeClass('active');
-  });
+  // Close the modal when the user clicks on <span> (x)
+  var span = document.getElementsByClassName("close-shift")[0];
+  span.onclick = function() {
+    var modal = document.getElementById('eventModal-shift');
+    modal.style.display = "none";
+  }
 
-  //モーダルの外側をクリックしたらモーダルを閉じる
-  $(document).on('click',function(e) {
-    if(!$(e.target).closest('.modal-body').length) {
-      container.removeClass('active');
+  // Close the modal when the user clicks anywhere outside of the modal
+  window.onclick = function(event) {
+    var modal = document.getElementById('eventModal-shift');
+    if (event.target == modal) {
+      modal.style.display = "none";
     }
-  });
+  }
 });
 
 $(document).on("click", "#delete_submit", function(){
