@@ -144,4 +144,10 @@ class adminController extends Controller
 
         return redirect()->route('admin_config_show');
     }
+
+    public function back(){
+        session_start();
+
+        return redirect()->route('admin_entryshow');
+    }
 }

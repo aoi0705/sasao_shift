@@ -69,11 +69,13 @@ Route::middleware('auth')->group(function () {
 //ここから下はスタッフ登録、スタッフ管理
 Route::post('/entry_email_send', [App\Http\Controllers\staffController::class, 'entry_mail'])->name('entry_mail');
 Route::get('/staff_entrysend', [App\Http\Controllers\staffController::class, 'entry_send'])->name('staff_entrysend');
+Route::get('/staff_entrysend_back', [App\Http\Controllers\staffController::class, 'entry_back'])->name('staff_entrysend_back');
 Route::get('/staff_entry/{id}', [App\Http\Controllers\staffController::class, 'entry_show'])->name('staff_entry');
 Route::post('/staff_entry_confirm', [App\Http\Controllers\staffController::class, 'staff_entry_confirm'])->name('staff_entry_confirm');
 Route::post('/staffentry_complete', [App\Http\Controllers\staffController::class, 'staff_entry_now'])->name('staff_entry_now');
 
 Route::get('/admin_entry', [App\Http\Controllers\adminController::class, 'show'])->name('admin_entryshow');
+Route::get('/admin_entry_back', [App\Http\Controllers\adminController::class, 'back'])->name('admin_entry_back');
 Route::post('/admin_entryconfirm', [App\Http\Controllers\adminController::class, 'admin_entryconfirm'])->name('admin_entryconfirm');
 Route::post('/admin_entrynow', [App\Http\Controllers\adminController::class, 'admin_entrynow'])->name('admin_entrynow');
 

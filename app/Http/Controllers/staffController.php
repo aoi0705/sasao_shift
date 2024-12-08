@@ -243,4 +243,10 @@ class staffController extends Controller
             return redirect()->back()->with('alert', '管理者パスワードが違います');
         }
     }
+
+    public function entry_back(){
+        session_start();
+
+        return redirect()->route('staff_entrysend_back');
+    }
 }

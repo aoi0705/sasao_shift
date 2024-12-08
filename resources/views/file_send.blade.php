@@ -82,7 +82,6 @@
 
 <!--job4用のスクリプト-->
 <script src="{{asset('js/main.js')}}"></script>
-
 <script src="{{asset('js/user_fileupload.js')}}"></script>
 
 <!--ハンバーガーボタン（開閉操作のボタン）-->

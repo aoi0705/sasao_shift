@@ -32,12 +32,17 @@ class excelController extends Controller
         $articles = DB::table('stamp')->get()->toArray();
 
         // Load the Excel file
-        $filePath = (storage_path('app/public/xlsx/template.xlsx'));
-        $spreadsheet = IOFactory::load($filePath);
-
-        // Select the active sheet
-        $sheet = $spreadsheet->getSheet(0);
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
         $cnt = 2;
+        
+        // ヘッダーの設定
+        $sheet->setCellValue('A1', 'User ID');
+        $sheet->setCellValue('B1', 'User Name');
+        $sheet->setCellValue('C1', 'Staff Type');
+        $sheet->setCellValue('D1', 'Date');
+        $sheet->setCellValue('E1', 'Time In');
+        $sheet->setCellValue('F1', 'Time Out');
 
         foreach($articles as $article){
             $day_datein = new DateTime($article->punch_in);
@@ -61,11 +66,13 @@ class excelController extends Controller
         }
 
         $today = date("YmdHis");
-        // Save the changes
-        $after_filePath = (storage_path('app/public/xlsx/' . $today . '.xlsx'));
-        $writer = new Xlsx($spreadsheet);
-        $writer->save($after_filePath);
+        $fileName = $today . '.xlsx';
+        $filePath = storage_path('app/public/' . $fileName);
 
-        return response()->download($after_filePath)->deleteFileAfterSend(true);
+        // Excelファイルの保存
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($filePath);
+
+        return response()->download($filePath)->deleteFileAfterSend(true);
     }
 }

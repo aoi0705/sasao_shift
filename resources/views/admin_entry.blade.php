@@ -15,22 +15,6 @@
 <header>
 <h1 id="logo"><a href="{{route('admin_menu')}}"><img src="images/logo.png" alt="JOB INFO"></a></h1>
 <!--メインメニュー-->
-<nav id="menubar">
-<ul>
-<li><a href="{{route('attendance_confirmation')}}">勤怠管理</a></li>
-<li><a href="{{route('staff_listshow')}}">スタッフ一覧</a></li>
-<li><a href="{{route('admin_config_show')}}">各種設定</a></li>
-<li><a href="{{route('received_file')}}">スタッフ送信ファイル確認</a></li>
-<li><a href="{{route('paid_holiday_list')}}">有給申請確認</a></li>
-<li><a href="">管理者アカウント</a>
-	<ul>
-		<li><a href="">パスワード変更</a></li>
-		<li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf
-        </form></li>
-	</ul>
-</li>
-</ul>
-</nav>
 </header>
 
 <main>
@@ -44,20 +28,36 @@
 <input type="hidden" id="field_cnt" name="field_cnt" value="1">
 <table class="ta1" id="entry_form">
 <tr>
-<th>メールアドレス※</th>
-<td><input type="email" name="email" size="30" class="ws" value="" required></td>
+<th>メールアドレス</th>
+<td>
+    @if(isset($_SESSION['email']))
+        <input type="email" name="email" size="30" class="ws" value="{{$_SESSION['email']}}" required>
+    @else
+        <input type="email" name="email" size="30" class="ws" value="" required>
+    @endif
+</td>
 </tr>
 <tr>
-<th>パスワード※</th>
-<td><input type="password" name="password" size="30" class="ws" required></td>
+<th>パスワード</th>
+<td><input type="password" id="password" name="password" size="30" class="ws" required></td>
 </tr>
 <tr>
-<th>パスワード（確認用）※</th>
-<td><input type="password" name="password_confirm" size="30" class="ws" required></td>
+<th>パスワード（確認用）</th>
+<td>
+    <input type="password" id="confirmPassword" name="password_confirm" size="30" class="ws" required>
+    <br>
+    <span id="message"></span>
+</td>
 </tr>
 <tr>
-<th>お名前※</th>
-<td><input type="text" name="name" size="30" class="ws" required></td>
+<th>お名前</th>
+<td>
+    @if(isset($_SESSION['name']))
+    <input type="text" name="name" size="30" class="ws" value="{{$_SESSION['name']}}" required>
+    @else
+        <input type="text" name="name" size="30" class="ws" value="" required>
+    @endif
+</td>
 </tr>
 </table>
 
@@ -79,79 +79,8 @@
 
 <!--job4用のスクリプト-->
 <script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/password.js')}}"></script>
 
-<script>
-    $('#dependent').on('change', function () {
-
-        if($('#dependent').val() == '有') {
-            var newField = $('<div id="dependent_bio1">' +
-            '<h2>扶養者情報1</h2>' +
-            '<table class="ta1">' +
-            '<tr>' +
-            '<th>扶養者の年収</th>' +
-            '<td><input type="text" name="dependent_income1" size="30" class="ws" required></td>' +
-            '</tr>' +
-            '<tr>' +
-            '<th>扶養者の名前</th>' +
-            '<td><input type="text" name="dependent_name1" size="30" class="ws" required></td>' +
-            '</tr>' +
-            '<tr>' +
-            '<th>扶養者のふりがな</th>' +
-            '<td><input type="text" name="dependent_furigana1" size="30" class="ws" required></td>' +
-            '</tr>' +
-            '<tr>' +
-            '<th>扶養者の性別</th>' +
-            '<td><select name="dependent_sex1" id="dependent_sex1" required><option value="">性別を選択してください</option><option value="男性">男性</option><option value="女性">女性</option></select></td>' +
-            '</tr>' +
-            '</table>' +
-			'</div>'
-		    );
-            
-            $('#dependent_area').append(newField);
-        } else {
-            $('#dependent_bio1').remove();
-        }
-    });
-
-    $(document).on("click", "#add", function(){
-        var cnt = $('#field_cnt').val();
-        var after_cnt = parseInt(cnt) + 1;
-        $('#field_cnt').val(String(after_cnt));
-
-        var newField = $('<div id="dependent_bio' + String(after_cnt) + '">' +
-            '<h2>扶養者情報' + String(after_cnt) + '</h2>' +
-            '<table class="ta1">' +
-            '<tr>' +
-            '<th>扶養者の年収</th>' +
-            '<td><input type="text" name="dependent_income' + String(after_cnt) + '" size="30" class="ws" required></td>' +
-            '</tr>' +
-            '<tr>' +
-            '<th>扶養者の名前</th>' +
-            '<td><input type="text" name="dependent_name' + String(after_cnt) + '" size="30" class="ws" required></td>' +
-            '</tr>' +
-            '<tr>' +
-            '<th>扶養者のふりがな</th>' +
-            '<td><input type="text" name="dependent_furigana' + String(after_cnt) + '" size="30" class="ws" required></td>' +
-            '</tr>' +
-            '<tr>' +
-            '<th>扶養者の性別</th>' +
-            '<td><select name="dependent_sex' + String(after_cnt) + '" id="dependent_sex'+String(after_cnt)+'" required><option value="">性別を選択してください</option><option value="男性">男性</option><option value="女性">女性</option></select></td>' +
-            '</tr>' +
-            '</table>' +
-            '</div>'
-        );
-        $('#dependent_area').append(newField);
-
-    });
-
-    $(document).on("click", "#remove", function(){
-        var cnt = $('#field_cnt').val();
-        var after_cnt = parseInt(cnt) - 1;
-        $('#field_cnt').val(String(after_cnt));
-
-        $('#dependent_bio' + String(cnt)).remove();
-    });
-</script>
 
 <!--ハンバーガーボタン（開閉操作のボタン）-->
 <div id="menubar_hdr"></div>

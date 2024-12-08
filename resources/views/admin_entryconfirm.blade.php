@@ -15,22 +15,6 @@
 <header>
 <h1 id="logo"><a href="{{route('admin_menu')}}"><img src="images/logo.png" alt="JOB INFO"></a></h1>
 <!--メインメニュー-->
-<nav id="menubar">
-<ul>
-<li><a href="{{route('attendance_confirmation')}}">勤怠管理</a></li>
-<li><a href="{{route('staff_listshow')}}">スタッフ一覧</a></li>
-<li><a href="{{route('admin_config_show')}}">各種設定</a></li>
-<li><a href="{{route('received_file')}}">スタッフ送信ファイル確認</a></li>
-<li><a href="{{route('paid_holiday_list')}}">有給申請確認</a></li>
-<li><a href="">管理者アカウント</a>
-	<ul>
-		<li><a href="">パスワード変更</a></li>
-		<li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf
-        </form></li>
-	</ul>
-</li>
-</ul>
-</nav>
 </header>
 
 <main>
@@ -56,7 +40,7 @@
 <p class="btn">
 <input type="submit" value="送信する">
 &nbsp;
-<input type="button" value="戻る" onClick="document.form1.mode.value='reinput';document.form1.submit()">
+<input type="button" value="戻る" onclick="location.href='{{route('admin_entry_back')}}'">
 </p>
 
 </form>

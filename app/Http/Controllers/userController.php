@@ -202,7 +202,7 @@ class userController extends Controller
             $replace_name = str_replace('storage', 'storage/app/public', $value);
             $file_name = str_replace('/storage/app/public/', '', $replace_name);
 
-            $zip->addFile($replace_name, $file_name);
+            $zip->addFile(storage_path($replace_name), $file_name);
         }
 
         $zip->close();

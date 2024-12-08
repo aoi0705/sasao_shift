@@ -48,11 +48,15 @@
 <table class="ta1">
 <tr>
 <th>パスワード</th>
-<td><input type="password" name="password" size="30" class="ws" required></td>
+<td>
+<input type="password" id="password" name="password" size="30" class="ws" required>
+<br>
+<span id="message"></span>
+</td>
 </tr>
 <tr>
 <th>パスワード（確認用）</th>
-<td><input type="password" name="password_confirm" size="30" class="ws" required></td>
+<td><input type="password" id="confirmPassword" name="password_confirm" size="30" class="ws" required></td>
 </tr>
 </table>
 
@@ -65,44 +69,6 @@
 
 </main>
 
-<div id="footermenu">
-<ul>
-<li class="title">メニュー</li>
-<li><a href="index.html">ホーム</a></li>
-<li><a href="company.html">会社概要</a></li>
-<li><a href="info.html">掲載のご案内</a></li>
-<li><a href="faq.html">よく頂く質問</a></li>
-<li><a href="contact.html">お問い合わせ</a></li>
-</ul>
-<ul>
-<li class="title">求人一覧</li>
-<li><a href="list.html">飲食店の求人</a></li>
-<li><a href="list.html">営業の求人</a></li>
-<li><a href="list.html">接客・販売の求人</a></li>
-<li><a href="list.html">事務の求人</a></li>
-</ul>
-<ul>
-<li class="title">メニュー見出し</li>
-<li><a href="#">サンプルメニューサンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-</ul>
-<ul>
-<li class="title">メニュー見出し</li>
-<li><a href="#">サンプルメニューサンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-<li><a href="#">サンプルメニュー</a></li>
-</ul>
-</div>
-<!--/#footermenu-->
-
-<footer>
-<small>Copyright&copy; <a href="index.html">JOB INFO</a> All Rights Reserved.</small>
-<span class="pr"><a href="https://template-party.com/" target="_blank">《Web Design:Template-Party》</a></span>
-</footer>
-
 </div>
 <!--/#container-->
 
@@ -111,38 +77,8 @@
 
 <!--job4用のスクリプト-->
 <script src="{{asset('js/main.js')}}"></script>
-<script>
-const form = document.getElementById('form');
+<script src="{{asset('js/password.js')}}"></script>
 
-form.addEventListener('submit',(e) => {
-    const password = form.elements['password'].value;
-    const password_confirm = form.elements['password_confirm'].value;
-    if(password !== password_confirm){
-        alert('パスワードが一致しません');
-        e.preventDefault();
-    }
-
-    /*
-    正規表現条件
-    ・半角数字、半角英字のみ
-    ・半角数字、半角英字がそれぞれ一文字以上使用されている
-    ・文字数が8~16字以内
-    */
-    const password_regex = /^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
-    const password_value = document.getElementsByClassName('content__form')[0].value;
-    // formのvalueを正規表現でチェック
-    const password_value_checked_result = password_regex.test(password_value);
-    
-    if(password_value_checked_result == true){
-        return true;
-    }
-    else{
-        alert('パスワードは半角英数字を8~16字で設定してください');
-        e.preventDefault();
-        return false;
-    }
-});
-</script>
 
 <!--ハンバーガーボタン（開閉操作のボタン）-->
 <div id="menubar_hdr"></div>
