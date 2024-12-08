@@ -71,6 +71,8 @@ class adminController extends Controller
     public function show(){
         session_start();
 
+        $_SESSION = [];
+
         return view('admin_entry');
     }
     public function admin_entryconfirm(Request $request)
@@ -106,8 +108,16 @@ class adminController extends Controller
 		];
 
         DB::table('users')->insert($param);
+        
+        // セッション変数をクリア
+        $_SESSION = [];
 
-        session_destroy();
+        // セッションを破棄
+        if (session_id() != "" || isset($_COOKIE[session_name()])) {
+            setcookie(session_name(), '', time() - 3600, '/');
+        }
+
+        session_destroy(); // セッションを破棄
 
         return view('staffentry_complete');
     }

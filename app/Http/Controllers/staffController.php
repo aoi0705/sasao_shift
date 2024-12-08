@@ -23,6 +23,8 @@ class staffController extends Controller
     public function entry_show($id){
         session_start();
 
+        $_SESSION = [];
+
         $article = DB::table('users')->find($id);
 
         $_SESSION['id'] = $id;
@@ -150,7 +152,15 @@ class staffController extends Controller
         ->where('id', $_SESSION['id']) // 条件が必要な場合はwhere()など指定可能
         ->update($param);
 
-        session_destroy();
+        // セッション変数をクリア
+        $_SESSION = [];
+
+        // セッションを破棄
+        if (session_id() != "" || isset($_COOKIE[session_name()])) {
+            setcookie(session_name(), '', time() - 3600, '/');
+        }
+
+        session_destroy(); // セッションを破棄
 
         return view('staffentry_complete');
     }
