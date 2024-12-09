@@ -35,6 +35,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         $i = $i + 1;
                     }
+
+                    foreach($holidays as $holiday){
+                      echo "{";
+                      echo "id: '".strval($i)."',";
+                      echo "title: '有給 ".$holiday->state." ：".$holiday->user_name."',";
+                      echo "start: '".$holiday->date." 00:00:00',";
+                      echo "end: '".$holiday->date." 23:59:59',";
+                      echo "},";
+
+                      $i = $i + 1;
+                  }
                 ?>
                 ],
 	locale: 'ja',

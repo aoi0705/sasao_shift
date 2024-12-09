@@ -75,7 +75,11 @@ class stampController extends Controller
         ->get()
         ->toArray();
 
-        return view('attendance_confirmation', compact('articles'));
+        $holidays = DB::table('holiday')
+        ->get()
+        ->toArray();
+
+        return view('attendance_confirmation', compact('articles','holidays'));
     }
 
     public function attendance_show(){
@@ -86,7 +90,12 @@ class stampController extends Controller
         ->get()
         ->toArray();
 
-        return view('attendance', compact('articles'));
+        $holidays = DB::table('holiday')
+        ->where('user_id', Auth::id())
+        ->get()
+        ->toArray();
+
+        return view('attendance', compact('articles','holidays'));
     }
 
     public function attendance_modify(){

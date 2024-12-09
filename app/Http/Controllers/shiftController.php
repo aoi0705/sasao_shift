@@ -17,7 +17,11 @@ class shiftController extends Controller
         $users = DB::table('users')->get()->toArray();
         $shifts = DB::table('shift')->get()->toArray();
 
-        return view('shift_entry',compact('users','shifts'));
+        $holidays = DB::table('holiday')
+        ->get()
+        ->toArray();
+
+        return view('shift_entry',compact('users','shifts','holidays'));
     }
 
     public function shift_add(Request $request){
@@ -98,8 +102,12 @@ class shiftController extends Controller
         session_start();
 
         $shifts = DB::table('shift')->where('staff_id',Auth::id())->get()->toArray();
+        $holidays = DB::table('holiday')
+        ->where('user_id',Auth::id())
+        ->get()
+        ->toArray();
 
-        return view('shift',compact('shifts'));
+        return view('shift',compact('shifts','holidays'));
     }
 
     public function modify(Request $request){
